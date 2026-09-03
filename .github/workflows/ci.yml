@@ -34,7 +34,7 @@ jobs:
       - name: OpenCode review
         uses: sst/opencode/github@latest
         with:
-          model: opencode-go/deepseek-v4-flash
+          model: anthropic/claude-sonnet-4-20250514
           use_github_token: true
           prompt: |
             Review this pull request's changed test files. Read each changed
@@ -52,4 +52,4 @@ jobs:
           share: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
