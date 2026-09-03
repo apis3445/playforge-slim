@@ -23,7 +23,12 @@ jobs:
       # compiles, and is collectable in a clean runner. In a project with a
       # reachable app, this line becomes:
       #   npx playwright install --with-deps && npx playwright test
-      - run: npx playwright test --list
+      - name: Run playwright tests
+        env: 
+          BASE_URL: ${{ vars.BASE_URL }}
+          TEST_USERNAME: ${{ vars.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ vars.TEST_PASSWORD }}
+        run: npx playwright test --list
 
   review:
     # Gate every entry point to the owner. On a public repo this stops anyone
@@ -34,7 +39,7 @@ jobs:
       - name: OpenCode review
         uses: sst/opencode/github@latest
         with:
-          model: opencode-go/deepseek-v4-flash
+          model: anthropic/claude-sonnet-4-5
           use_github_token: true
           prompt: |
             Review this pull request's changed test files. Read each changed
@@ -52,4 +57,4 @@ jobs:
           share: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
